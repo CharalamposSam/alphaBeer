@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alfa Beer</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+        body{
+            margin:0;
+            background-color: #e8e8e8;
+        }
+        main{
+            margin: 800px 0;
+            width: 100%;
+            
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            padding: 0 10%;
+        }
+        .cont2{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            max-width: 1200px;
+        }
+        .beerContainer{
+            padding: 0 30px;
+            width: 25%;
+            min-width: 40px;
+            position: relative;
+            z-index: 100;
+            transform-origin: 100% 0%;
+            transform: scale(.8);
+            opacity: 0;
+        }
+        /* Beers START */
+        .greenBeer:hover::after, .weissBeer:hover::after, .strongBeer:hover::after, .horisBeer:hover::after{
+            opacity: .5;
+            background-size: 100% 100%;
+        }
+        .greenBeer::after, .weissBeer::after, .strongBeer::after, .horisBeer::after{
+            content:'';
+            position: absolute;
+            top:0%;
+            left:0%;
+            transform: translate(-0%,-0%);
+            width:100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 80% 80%;
+            transition: all .3s;
+        }
+        .greenBeer::after{
+            background-image:url(images/greenSmoke.png);
+        }
+        .weissBeer::after{
+            background-image:url(images/weissSmoke.png);
+        }
+        .strongBeer::after{
+            background-image:url(images/strongSmoke.png);
+        }
+        .horisBeer::after{
+            background-image:url(images/horisSmoke.png);
+        }
+        .greenCan, .horisCan{
+            height: 50%;
+            position: absolute;
+            top:10%;
+            left:80%;
+            z-index:102;
+            opacity: 0;
+            transform-origin: 0 0;
+        }
+        .greenBottle, .horisBottle{
+            position: relative;
+            top:-25%;
+            left:-13%;
+            z-index: 101;
+            opacity: 0;
+        }
+        .greenSmoke, .horisSmoke{
+            top:0;
+            left:0;
+        }
+        .greenBottle > img, .horisBottle > img{
+            width: 60%;
+        }
+        .weissCan{
+            height: 70%;
+            position: absolute;
+            top:10%;
+            left:80%;
+            z-index:102;
+            opacity: 0;
+            transform-origin: 0 0;
+        }
+        .weissBottle{
+            position: relative;
+            top:-25%;
+            left:-13%;
+            z-index: 101;
+            opacity: 0;
+        }
+        .weissSmoke,{
+            top:0;
+            left:0;
+        }
+        .weissBottle > img{
+            width: 60%;
+        }
+        .strongCan{
+            height: 70%;
+            position: relative;
+            top:10%;
+            left:80%;
+            z-index:102;
+            opacity: 0;
+            transform-origin: 25% 0%;
+        }
+        .strongBottle{
+            position: relative;
+            top:0%;
+            left:61%;
+            z-index: 101;
+            opacity: 1;
+        }
+        .strongSmoke,{
+            top:0;
+            left:0;
+        }
+        .strongCan > img{
+            width: 60%;
+        }
+        /* Beers END */
+        /* Boards START */
+        .greenBoard, .weissBoard, .strongBoard, .horisBoard{
+            width: 100%;
+            height: 0%;
+            position: absolute;
+            top:100%;
+            left:0%;
+            z-index:99;
+            transform: rotatex(180deg);
+            transform-origin: top;
+            transition: transform .4s ease-in-out, height .2s ease-in-out, opacity .1s ease-in-out;
+            background-color: white;
+            opacity: 0;
+            overflow: hidden;
+            display: flex;
+        }
+        .greenBoard{
+            border: 10px solid #26744f;
+            color: red;
+        }
+        .weissBoard{
+            border: 10px solid #957251;
+            color: blue;
+        }
+        .strongBoard{
+            border: 10px solid #4b587b;
+            color: green;
+            
+        }
+        .horisBoard{
+            border: 10px solid #0072b8;
+            color: black;
+        }
+        .boards div{
+            transform: rotatex(180deg);
+            width: 100%;
+            height: 100;
+            background-color: white;
+            font-size: 2.3vw;
+            display: flex;
+            align-items: center;
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+        }
+        .greenBoard > .greenMessage {
+            color: #26744f;
+            padding: 0 30%;
+            background-image: url(images/greenBoard.png);
+            background-position: 100% 0;
+        }
+        .weissBoard > .weissMessage{
+            color: #957251;
+            padding: 0 5% 0 55%;
+            background-image: url(images/weissBoard.png);
+            background-size: auto 100%;
+        }
+        .strongBoard > .strongMessage{
+            color: #4b587b;
+            padding: 0 55% 0 10%;
+            background-image: url(images/strongBoard.png);
+            background-size: auto 100%;
+            background-position: 100% 0;
+        }
+        .horisBoard > .horisMessage{
+            color: #0072b8;
+            padding: 0 30%;
+            background-image: url(images/horisBoard.png);
+            background-size: auto 100%;
+        }
+        /* Boards END */
+        /* Buttons START */
+        button{
+            width: 20%;
+            height: 15%;
+            border-radius: 30px;
+            color: white;
+            font-size: 1vw;
+            position: absolute;
+            z-index: 150;
+            outline: none;
+            cursor: pointer;
+            opacity: 0;
+            overflow: hidden;
+            border: none;
+            background-color: white;
+        }
+        .greenButton{
+            top:90%;
+            left:3%;
+            border: 2px solid #26744f;
+            box-shadow: inset 0 0 0 1px #26744f;
+        }
+        .weissButton{
+            top:90%;
+            left:28%;
+            border: 2px solid #957251;
+            box-shadow: inset 0 0 0 1px #957251;
+        }
+        .strongButton{
+            top:90%;
+            left:53%;
+            border: 2px solid #4b587b;
+            box-shadow: inset 0 0 0 1px #4b587b;
+        }
+        .horisButton{
+            top:90%;
+            left:78%;
+            border: 2px solid #0071b7;
+            box-shadow: inset 0 0 0 1px #0071b7;
+        }
+        .greenButton::after, .weissButton::after, .strongButton::after, .horisButton::after{
+            position: absolute;
+            content: '';
+            top:0;
+            left:0;
+            width:100%;
+            height: 100%;
+            transition: .2s ease-in-out;
+            z-index: -1;
+            border: none;
+            border-radius: 30px;
+        }
+        .greenButton::after{
+            background-color: #26744f;
+        }
+        .weissButton::after{
+            background-color: #957251;
+        }
+        .strongButton::after{
+            background-color: #4b587b;
+        }
+        .horisButton::after{
+            background-color: #0072b8;
+        }
+        .greenButton:hover::after, .weissButton:hover::after, .strongButton:hover::after, .horisButton:hover::after{
+            left:100%;
+        }
+        .greenButton:hover{
+            color:#26744f;
+        }
+        .weissButton:hover{
+            color:#957251;
+        }
+        .strongButton:hover{
+            color:#4b587b;
+        }
+        .horisButton:hover{
+            color:#0072b8;
+        }
+        .arrowImg{
+            margin-left: 10px;
+            transform: translate(0, 2px);
+            width: 15%;
+        }
+        /* Buttons END */
+        @media only screen and (max-width: 1080px) {
+            .container{
+                padding: 0 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="cont2">
+                <!-- Beers -->
+                <div class="beerContainer greenBeer">
+                    <div class="greenBottle">
+                        <img src="images/greenBottle.png">
+                    </div>
+                    <img src="images/greenCan.png" class="greenCan">
+                </div>
+                <div class="beerContainer weissBeer">
+                    <div class="weissBottle">
+                        <img src="images/weissBottle.png">
+                    </div>
+                    <img src="images/weissCan.png" class="weissCan">
+                </div>
+                <div class="beerContainer strongBeer">
+                    <div class="strongCan">
+                        <img src="images/strongCan.png">
+                    </div>
+                </div>
+                <div class="beerContainer horisBeer">
+                    <div class="horisBottle">
+                        <img src="images/horisBottle.png">
+                    </div>
+                    <img src="images/horisCan.png" class="horisCan">
+                </div>
+                <!-- Boards -->
+                <div class="greenBoard boards">
+                    <div class="greenMessage">
+                        Mία ευκολόπιοτη μπύρα που συνοδεύει κάθε στιγμή με τους ανθρώπο.
+                    <img  class="reenImg">
+                    </div>
+                </div>
+                <div class="weissBoard boards">
+                    <div class="weissMessage">
+                        Ελληνική, σταρένια & αφιλτράριστη. Η Weiss πλευρά της ΑΛΦΑ.
+                    </div>
+                </div>
+                <div class="strongBoard boards">
+                    <div class="strongMessage">
+                       Δυναμική και Street, με 7% αλκοόλ. Η Strong πλευρα της ΑΛΦΑ.
+                    </div>
+                </div>
+                <div class="horisBoard boards">
+                    <div class="horisMessage">
+                        Mία ευκολόπιοτη μπύρα που συνοδεύει κάθε στιγμή με τους ανθρώπο.
+                    </div>
+                </div>
+                <!-- Buttons -->
+                <a href="#"><button class="greenButton">Μάθε περισσότερα<img src="images/arrow.png" class="arrowImg"></button></a>
+                <a href="#"><button class="weissButton">Μάθε περισσότερα<img src="images/arrow.png" class="arrowImg"></button></a>
+                <a href="#"><button class="strongButton">Μάθε περισσότερα<img src="images/arrow.png" class="arrowImg"></button></a>
+                <a href="#"><button class="horisButton">Μάθε περισσότερα<img src="images/arrow.png" class="arrowImg"></button></a>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Variables
+        const box = document.querySelector(".cont2"),
+            beerContainer = document.querySelectorAll(".beerContainer"),
+            greenBottle = document.querySelector(".greenBottle"),
+            greenCan = document.querySelector(".greenCan"),
+            greenBeer = document.querySelector(".greenBeer"),
+            greenBoard = document.querySelector(".greenBoard").style,
+            greenButton = document.querySelector(".greenButton"),
+            greenImg = document.querySelector(".greenImg"),
+            weissBottle = document.querySelector(".weissBottle"),
+            weissCan = document.querySelector(".weissCan"),
+            weissBeer = document.querySelector(".weissBeer"),
+            weissBoard = document.querySelector(".weissBoard").style,
+            weissButton = document.querySelector(".weissButton"),
+            strongCan = document.querySelector(".strongCan"),
+            strongBeer = document.querySelector(".strongBeer"),
+            strongBoard = document.querySelector(".strongBoard").style,
+            strongButton = document.querySelector(".strongButton"),
+            horisBottle = document.querySelector(".horisBottle"),
+            horisCan = document.querySelector(".horisCan"),
+            horisBeer = document.querySelector(".horisBeer"),
+            horisBoard = document.querySelector(".horisBoard").style,
+            horisButton = document.querySelector(".horisButton"),
+            greenArrow = document.querySelector(".greenButton > .arrowImg"),
+            weissArrow = document.querySelector(".weissButton > .arrowImg"),
+            strongArrow = document.querySelector(".strongButton > .arrowImg"),
+            horisArrow = document.querySelector(".horisButton > .arrowImg")
+        //Entrance efe
+        window.addEventListener("scroll", () => {
+            if(window.scrollY > 250) {
+                greenBeer.style.opacity = "1"
+                greenBeer.style.transform = "scale(1)"
+                greenBeer.style.transition = "transform .4s ease-in-out .1s, opacity .2s ease .1s"
+                weissBeer.style.opacity = "1"
+                weissBeer.style.transform = "scale(1)"
+                weissBeer.style.transition = "transform .4s ease-in-out .15s, opacity .2s ease .15s"
+                strongBeer.style.opacity = "1"
+                strongBeer.style.transform = "scale(1)"
+                strongBeer.style.transition = "transform .4s ease-in-out .2s, opacity .2s ease .2s"
+                horisBeer.style.opacity = "1"
+                horisBeer.style.transform = "scale(1)"
+                horisBeer.style.transition = "transform .4s ease-in-out .25s, opacity .2s ease .25s"
+                greenBottle.style.cssText = "top:0;left:25%;opacity:1;transition:top .6s ease-in-out .2s, left .6s ease-in-out .2s, opacity .5s ease-in-out .2s, transform .3s ease-in-out;"
+                greenCan.style.cssText = "top:43%;left:53%;opacity:1;transition:top .6s ease-in-out .2s, left .6s ease-in-out .2s, opacity .5s ease-in-out .2s, transform .3s ease-in-out;"
+                weissBottle.style.cssText = "top:0;left:25%;opacity:1;transition:top .6s ease-in-out 0.6s, left .6s ease-in-out 0.6s, opacity .5s ease-in-out .6s, transform .3s ease-in-out;"
+                weissCan.style.cssText = "top:26%;left:53%;opacity:1;transition:top .6s ease-in-out 0.6s, left .6s ease-in-out 0.6s, opacity .5s ease-in-out .6s, transform .3s ease-in-out;"
+                strongCan.style.cssText = "top:21%;left:36%;opacity:1;transition:top .6s ease-in-out .9s, left .6s ease-in-out .9s, opacity .5s ease-in-out 1s, transform .3s ease-in-out;"
+                horisBottle.style.cssText = "top:0;left:25%;opacity:1;transition:top .6s ease-in-out 1.2s, left .6s ease-in-out 1.2s, opacity .5s ease-in-out 1.4s, transform .3s ease-in-out;"
+                horisCan.style.cssText = "top:43%;left:53%;opacity:1;transition:top .6s ease-in-out 1.2s, left .6s ease-in-out 1.2s, opacity .5s ease-in-out 1.4s, transform .3s ease-in-out;"
+            }
+        })
+        //Basic efe
+        box.addEventListener("mouseout", () => {
+            greenBoard.height = "0"
+            weissBoard.height = "0"
+            strongBoard.height = "0"
+            horisBoard.height = "0"
+            greenBeer.style.zIndex = "90"
+            weissBeer.style.zIndex = "90"
+            strongBeer.style.zIndex = "90"
+            horisBeer.style.zIndex = "90"
+            greenBoard.opacity = "0"
+            weissBoard.opacity = "0"
+            strongBoard.opacity = "0"
+            horisBoard.opacity = "0"
+            greenButton.style.opacity = "0"
+            weissButton.style.opacity = "0"
+            strongButton.style.opacity = "0"
+            horisButton.style.opacity = "0"
+            weissBeer.children[0].style.transform = "scale(1)"
+            weissBeer.children[1].style.transform = "scale(1)"
+            greenBeer.children[0].style.transform = "scale(1)"
+            greenBeer.children[1].style.transform = "scale(1)"
+            strongBeer.children[0].style.transform = "scale(1)"
+            horisBeer.children[0].style.transform = "scale(1)"
+            horisBeer.children[1].style.transform = "scale(1)"
+        })
+         box.addEventListener("mousemove", function(e){
+            let z = (window.innerWidth - box.offsetWidth) / 2 + greenBeer.offsetWidth
+             if(e.x < z){
+                greenBoard.height = "94%"
+                weissBoard.height = "0"
+                greenBoard.opacity = "1"
+                weissBoard.opacity = "0"
+                greenBeer.style.zIndex = "100"
+                weissBeer.style.zIndex = "90"
+                greenBeer.children[0].style.transform = "scale(1.1)"
+                greenBeer.children[1].style.transform = "scale(1.1)"
+                weissBeer.children[0].style.transform = "scale(1)"
+                weissBeer.children[1].style.transform = "scale(1)"
+                greenButton.style.opacity = "1"
+                weissButton.style.opacity = "0"
+             } 
+             if(e.x > z && e.x < z + weissBeer.offsetWidth){
+                greenBoard.height = "0"
+                weissBoard.height = "94%"
+                strongBoard.height = "0"
+                greenBoard.opacity = "0"
+                weissBoard.opacity = "1"
+                strongBoard.opacity = "0"
+                greenBeer.style.zIndex = "90"
+                weissBeer.style.zIndex = "100"
+                strongBeer.style.zIndex = "90"
+                weissBeer.children[0].style.transform = "scale(1.1)"
+                weissBeer.children[1].style.transform = "scale(1.1)"
+                greenBeer.children[0].style.transform = "scale(1)"
+                greenBeer.children[1].style.transform = "scale(1)"
+                strongBeer.children[0].style.transform = "scale(1)"
+                greenButton.style.opacity = "0"
+                weissButton.style.opacity = "1"
+                strongButton.style.opacity = "0"
+             } 
+             if(e.x < z + weissBeer.offsetWidth * 2 && e.x > z + weissBeer.offsetWidth){
+                weissBoard.height = "0"
+                strongBoard.height = "94%"
+                horisBoard.height = "0"
+                weissBoard.opacity = "0"
+                strongBoard.opacity = "1"
+                horisBoard.opacity = "0"
+                weissBeer.style.zIndex = "90"
+                strongBeer.style.zIndex = "100"
+                horisBeer.style.zIndex = "90"
+                strongBeer.children[0].style.transform = "scale(1.1)"
+                weissBeer.children[0].style.transform = "scale(1)"
+                weissBeer.children[1].style.transform = "scale(1)"
+                horisBeer.children[0].style.transform = "scale(1)"
+                horisBeer.children[1].style.transform = "scale(1)"
+                weissButton.style.opacity = "0"
+                strongButton.style.opacity = "1"
+                horisButton.style.opacity = "0"
+             } 
+             if(e.x < z + weissBeer.offsetWidth * 3 && e.x > z + weissBeer.offsetWidth * 2){
+                strongBoard.height = "0"
+                horisBoard.height = "94%"
+                strongBoard.opacity = "0"
+                horisBoard.opacity = "1"
+                strongBeer.style.zIndex = "90"
+                horisBeer.style.zIndex = "100"
+                horisBeer.children[0].style.transform = "scale(1.1)"
+                horisBeer.children[1].style.transform = "scale(1.1)"
+                strongBeer.children[0].style.transform = "scale(1)"
+                strongButton.style.opacity = "0"
+                horisButton.style.opacity = "1"
+             } 
+         })
+         //Change arrow image
+         greenButton.addEventListener("mouseover", () => {
+            greenArrow.src = "images/greenArrow.png"
+         })
+         greenButton.addEventListener("mouseout", () => {
+            greenArrow.src = "images/arrow.png"
+         })
+         weissButton.addEventListener("mouseover", () => {
+            weissArrow.src = "images/weissArrow.png"
+         })
+         weissButton.addEventListener("mouseout", () => {
+            weissArrow.src = "images/arrow.png"
+         })
+         strongButton.addEventListener("mouseover", () => {
+            strongArrow.src = "images/strongArrow.png"
+         })
+         strongButton.addEventListener("mouseout", () => {
+            strongArrow.src = "images/arrow.png"
+         })
+         horisButton.addEventListener("mouseover", () => {
+            horisArrow.src = "images/horisArrow.png"
+         })
+         horisButton.addEventListener("mouseout", () => {
+            horisArrow.src = "images/arrow.png"
+         })
+
+         alert("Scroll down to start the animation.")
+    </script>
+</body>
+</html>
